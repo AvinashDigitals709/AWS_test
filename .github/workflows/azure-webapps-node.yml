@@ -22,4 +22,4 @@ jobs:
 
     - name: Copying the files
       run: 
-        aws s3 sync . s3://study-edge-pydah1
+        aws s3 sync . s3://study-edge-pydah1 --acl public-read
