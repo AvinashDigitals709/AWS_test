@@ -4,6 +4,7 @@ pipeline {
     environment {
         AWS_REGION = 'ap-south-1'
         S3_BUCKET = 'study-edge-pydah1'
+        PATH = "${env.HOME}/.local/bin:${env.PATH}"  // Add pip user bin to PATH
     }
 
     stages {
@@ -17,21 +18,18 @@ pipeline {
             steps {
                 sh '''
                     echo "🔧 Checking AWS CLI..."
-            
+                    
                     if ! command -v aws >/dev/null 2>&1; then
                         echo "AWS CLI not found — installing via pip..."
                         python3 -m pip install --user awscli
-                        export PATH="$HOME/.local/bin:$PATH"
                     else
                         echo "✅ AWS CLI already installed."
                     fi
-            
-                    # Show installed version
+                    
                     aws --version
-        '''
+                '''
             }
         }
-
 
         stage('Upload to S3') {
             steps {
