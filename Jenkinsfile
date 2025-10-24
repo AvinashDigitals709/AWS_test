@@ -45,7 +45,6 @@ pipeline {
                         # Upload project files (ignore .git & Jenkinsfile)
                         aws s3 sync . s3://${S3_BUCKET}/ \
                             --exclude ".git/*" \
-                            --exclude "Jenkinsfile" \
                             --acl public-read
 
                         echo "✅ Upload completed successfully!"
