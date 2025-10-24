@@ -16,25 +16,22 @@ pipeline {
         stage('Setup AWS CLI') {
             steps {
                 sh '''
-                    echo "🔧 Checking and installing AWS CLI if missing..."
+                    echo "🔧 Checking AWS CLI..."
+            
                     if ! command -v aws >/dev/null 2>&1; then
-                        if command -v apt-get >/dev/null 2>&1; then
-                            sudo apt-get update -y
-                            sudo apt-get install -y awscli
-                        elif command -v yum >/dev/null 2>&1; then
-                            sudo yum install -y awscli
-                        else
-                            echo "No package manager found — installing via pip..."
-                            python3 -m pip install --user awscli
-                            export PATH="$HOME/.local/bin:$PATH"
-                        fi
+                        echo "AWS CLI not found — installing via pip..."
+                        python3 -m pip install --user awscli
+                        export PATH="$HOME/.local/bin:$PATH"
                     else
                         echo "✅ AWS CLI already installed."
                     fi
+            
+                    # Show installed version
                     aws --version
-                '''
+        '''
             }
         }
+
 
         stage('Upload to S3') {
             steps {
