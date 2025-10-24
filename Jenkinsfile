@@ -21,14 +21,16 @@ pipeline {
                     # Install pip3 if missing
                     if ! command -v pip3 >/dev/null 2>&1; then
                         echo "pip3 not found — installing..."
-                        sudo apt-get update -y
-                        sudo apt-get install -y python3-pip
+                        sudo apt-get update -y 
+                        sudo apt-get install -y python3-pip 
                     fi
 
                     
                     if ! command -v aws >/dev/null 2>&1; then
                         echo "AWS CLI not found — installing via pip..."
-                        python3 -m pip install --user awscli
+                        sudo apt update
+                        sudo apt install awscli -y
+
                     else
                         echo "✅ AWS CLI already installed."
                     fi
